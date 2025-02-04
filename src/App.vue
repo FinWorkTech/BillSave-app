@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import Toolbar from './public/components/toolbar.component.vue';
 
 var count = ref(0);
 
@@ -9,6 +10,8 @@ const increment = () => {
 </script>
 
 <template>
+  <Toolbar/>
+
   <div class="w-full h-screen flex items-center justify-center">
     <div class="text-center">
       <h1 class="my-3">{{ count }}</h1>
