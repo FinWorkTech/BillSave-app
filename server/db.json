@@ -1,3 +1,92 @@
 {
+  "profiles": [
+    {
+      "id": 1,
+      "fullname": "Maria Pucyura"
+    },
+    {
+      "id": 2,
+      "fullname": "Gonzalo Quedena"
+    }
+  ],
 
+  "users": [
+    {
+      "id": 1,
+      "username": "maria-pucyura",
+      "password": "123456",
+      "profile_id": 1
+    },
+    {
+      "id": 2,
+      "username": "gonzalo-quedena",
+      "password": "123456",
+      "profile_id": 2
+    }
+  ],
+
+  "portfolios": [
+    {
+      "id": 1,
+      "name": "Cartera Principal",
+      "discount_date": "2023-12-01",
+      "user_id": 1,
+      "currency": "S/",
+      "average_tcea": 12.5
+    },
+    {
+      "id": 2,
+      "name": "Cartera Secundaria",
+      "discount_date": "2023-11-15",
+      "user_id": 2,
+      "currency": "USD",
+      "average_tcea": 10.0
+    }
+  ],
+
+  "documents": [
+    {
+      "id": 1,
+      "code": "LET001",
+      "nominal_value": 1000.0,
+      "issue_date": "2023-10-01",
+      "due_date": "2023-12-01",
+      "rate_type": "nominal",
+      "rate_value": 5.0,
+      "currency": "S/",
+      "portfolio_id": 1
+    },
+    {
+      "id": 2,
+      "code": "FAC001",
+      "nominal_value": 2000.0,
+      "issue_date": "2023-09-15",
+      "due_date": "2023-11-15",
+      "rate_type": "effective",
+      "rate_value": 6.0,
+      "currency": "USD",
+      "portfolio_id": 2
+    }
+  ],
+
+  "reports": [
+    {
+      "id": 1,
+      "start_date": "2023-10-01",
+      "end_date": "2023-12-01",
+      "portfolio_id": 1,
+      "total_documents": 1,
+      "discounted_amount": 1000.0,
+      "tcea": 12.5
+    },
+    {
+      "id": 2,
+      "start_date": "2023-09-15",
+      "end_date": "2023-11-15",
+      "portfolio_id": 2,
+      "total_documents": 1,
+      "discounted_amount": 2000.0,
+      "tcea": 10.0
+    }
+  ]
 }
