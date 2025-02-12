@@ -38,9 +38,12 @@ function handleCancel() {
       </div>
 
       <div class="flex justify-between mt-3">
-        <button type="button" @click="handleCancel" 
-          class="px-4 py-2 rounded-4xl bg-[#353e49] text-white hover:bg-[#2c333a] shadow-lg cursor-pointer">Cancel
-        </button>
+        <router-link to="/portfolios"
+          class="px-4 py-2 rounded-4xl bg-[#353e49] text-white hover:bg-[#2c333a] shadow-lg">
+          <button type="button" @click="handleCancel" class="cursor-pointer">
+            Cancel
+          </button>
+        </router-link>
         
         <button type="submit" 
           class="px-4 py-2 rounded-4xl bg-[#353e49] text-white hover:bg-[#2c333a] shadow-lg cursor-pointer">Save

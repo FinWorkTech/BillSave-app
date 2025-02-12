@@ -13,7 +13,7 @@
         <h1 class="hidden lg:block text-black text-4xl -mt-30 mb-15">Welcome Ana</h1>
 
         
-        <router-link to="/create-portfolio" class="inline-block px-8 py-4 lg:px-14 lg:py-8 bg-[#051320] rounded-2xl lg:max-w-xs">
+        <router-link to="/portfolios/create" class="inline-block px-8 py-4 lg:px-14 lg:py-8 bg-[#051320] rounded-2xl lg:max-w-xs">
           <span class="text-md md:text-xl">
             New Portfolio
           </span>

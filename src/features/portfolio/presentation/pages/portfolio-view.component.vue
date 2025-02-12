@@ -13,7 +13,7 @@ defineOptions({
 
     <div class="flex flex-col lg:flex-row lg:justify-between lg:px-4 gap-4">
       
-      <router-link to="/create-portfolio" class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center">
+      <router-link to="/portfolios/create" class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center">
         <span>Create</span>
       </router-link>
 

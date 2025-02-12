@@ -3,25 +3,27 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [ 
   {
     path: '/home',
-    name: 'home',
+    name: 'Home',
     component: () => import('../../public/pages/home.component.vue'),
-    meta: {title: 'Home'}
+    meta: { title: 'Home' }
   },
-  
   {
     path: '/portfolios',
-    name: 'portfolios',
-    component: () => import('../../features/portfolio/presentation/pages/portfolio-view.component.vue'),
-    meta: {title: 'Portfolios'}
+    children: [
+      {
+        path: '',
+        name: 'Portfolios',
+        component: () => import('../../features/portfolio/presentation/pages/portfolio-view.component.vue'),
+        meta: { title: 'Portfolios' }
+      },
+      {
+        path: 'create',
+        name: 'CreatePortfolio',
+        component: () => import('../../features/portfolio/presentation/pages/portfolio-create-view.component.vue'),
+        meta: { title: 'Create Portfolio' }
+      }
+    ]
   },
-
-  {
-    path: '/create-portfolio',
-    name: 'create-portfolio',
-    component: () => import('../../features/portfolio/presentation/pages/portfolio-create-view.component.vue'),
-    meta: {title: 'Portfolios'}
-  },
-
   {
     path: '/',
     redirect: '/home'
@@ -35,9 +37,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const baseTitle = 'BillSave';
-  document.title = `${baseTitle} | ${to.meta.title}`
+  document.title = `${baseTitle} | ${to.meta.title}`;
   next();
 });
 
 export default router;
-
