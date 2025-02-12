@@ -20,14 +20,14 @@ name: 'toolbar',
                 <div class="hidden lg:flex lg:col-span-1">
                     <ul class="md:flex gap-14 items-center w-full lg:justify-end">
                         <li class="list-none">
-                            <a href="#" class="nav__link-about-me flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
+                            <router-link to="/" class="nav__link-about-me flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
                                 Home
-                            </a>
+                            </router-link>
                         </li>
                         <li class="list-none">
-                            <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
+                            <router-link to="/portfolios" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
                                 Portfolio
-                            </a>
+                            </router-link>
                         </li>
                         <li class="list-none">
                             <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
@@ -53,14 +53,14 @@ name: 'toolbar',
                 <!-- Mobile Menu -->
                 <ul class="dropdown bg-[#353E49] px-10 lg:hidden absolute right-0 top-0 bottom-0 w-[60%] max-w-[300px] p-4 flex flex-col gap-6 justify-center" id="menu">
                     <li class="list-none">
-                        <a href="#" class="nav__link-about-me flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3">
+                        <router-link href="/" class="nav__link-about-me flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3">
                             Home
-                        </a>
+                        </router-link>
                     </li>
                     <li class="list-none">
-                        <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3">
+                        <router-link to="/portfolios" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3">
                             Portfolio
-                        </a>
+                        </router-link>
                     </li>
                     <li class="list-none">
                         <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3">
