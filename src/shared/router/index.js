@@ -7,6 +7,14 @@ const routes = [
     component: () => import('../../public/pages/home.component.vue'),
     meta: {title: 'Home'}
   },
+  
+  {
+    path: '/portfolios',
+    name: 'portfolios',
+    component: () => import('../../features/portfolio/presentation/pages/portfolio-view.component.vue'),
+    meta: {title: 'Portfolios'}
+  },
+
   {
     path: '/',
     redirect: '/home'
