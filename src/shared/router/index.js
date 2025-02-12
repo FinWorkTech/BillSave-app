@@ -16,6 +16,13 @@ const routes = [
   },
 
   {
+    path: '/create-portfolio',
+    name: 'create-portfolio',
+    component: () => import('../../features/portfolio/presentation/pages/portfolio-create-view.component.vue'),
+    meta: {title: 'Portfolios'}
+  },
+
+  {
     path: '/',
     redirect: '/home'
   }
