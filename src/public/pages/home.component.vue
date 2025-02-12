@@ -30,7 +30,7 @@
       <div class="w-full h-px bg-gray-300 my-4 lg:hidden"></div>
     </div>
 
-    <div class="right w-full p-x-4 py-6 lg:py-15 flex flex-col gap-8 items-center justify-center md:flex-row flex-wrap">
+    <div class="right w-full px-4 py-6 lg:py-15 flex flex-col gap-8 items-center justify-center md:flex-row flex-wrap">
 
       <div class="flex flex-col gap-4 text-center justify-center border border-gray-300 
         shadow-lg p-8 rounded-lg w-full md:w-[280px] lg:w-[350px] md:h-[230px] lg:h-[300px] text-xl lg:text-2xl">
