@@ -1,7 +1,8 @@
 en la terminal ejecutar:
 - npm install
+  
 despues correrlo
-npm run dev
+- npm run dev
 
 
 # Vue 3 + Vite
