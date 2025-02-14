@@ -3,16 +3,16 @@ import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const items = ref([]); // Lista de portafolios
-const searchText = ref(""); // Texto de búsqueda
+const items = ref([]); // portafolios
+const searchText = ref(""); 
 
-// Recupera los portafolios guardados desde localStorage
+// Portafolios guardados
 onMounted(() => {
   const savedItems = JSON.parse(localStorage.getItem("portfolios")) || [];
   items.value = savedItems;
 });
 
-// Computed para filtrar la lista en función del texto de búsqueda
+//filtrar la lista de busqueda
 const filteredItems = computed(() => {
   return items.value.filter((item) =>
     item.name.toLowerCase().includes(searchText.value.toLowerCase())
@@ -27,10 +27,10 @@ const deletePortfolio = (index) => {
   }
 };
 
-// Editor de un portafolio
+// editor de un portafolio
 const editPortfolio = (index) => {
   localStorage.setItem("editingPortfolio", JSON.stringify(items.value[index]));
-  localStorage.setItem("editingIndex", index); // Guardar el índice del portafolio
+  localStorage.setItem("editingIndex", index);
   router.push("/portafolio-form");
 };
 
@@ -99,7 +99,7 @@ const goToForm = () => {
     </div>
   </div>
 
-  <!-- Mostrar mensaje si no hay ningun portfolio con ese nombre -->
+  <!-- Si no hay ningun portfolio con ese nombre -->
   <div v-else class="text-center text-gray-600 text-xl mt-5">
     No se encontraron resultados.
   </div>
