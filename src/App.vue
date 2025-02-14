@@ -1,6 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-import Toolbar from './public/components/toolbar.component.vue';
+import { ref } from "vue";
+import Toolbar from "./public/components/toolbar.component.vue";
+
+const items = ref([]);
+
+const addItem = (newItem) => {
+  items.value.push(newItem);
+};
 
 var count = ref(0);
 
@@ -10,8 +16,8 @@ const increment = () => {
 </script>
 
 <template>
-  <Toolbar/>
-
+  <Toolbar />
+  <router-view @save="addItem" :items="items" />
   <div class="w-full h-screen flex items-center justify-center">
     <div class="text-center">
       <h1 class="my-3">{{ count }}</h1>

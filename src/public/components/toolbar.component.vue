@@ -23,11 +23,11 @@ name: 'toolbar',
                             <a href="#" class="nav__link-about-me flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
                                 Home
                             </a>
-                        </li>
+                        </li>   
                         <li class="list-none">
-                            <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
+                            <router-link to="/portafolio-list-view" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
                                 Portfolio
-                            </a>
+                            </router-link>
                         </li>
                         <li class="list-none">
                             <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
