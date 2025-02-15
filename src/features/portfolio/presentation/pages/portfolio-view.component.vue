@@ -1,5 +1,5 @@
 <script setup>
-import SearchInput from '../../../../public/components/search.component.vue';
+import SearchInput from '../../../../shared/components/search.component.vue'
 import PortfolioItem from '../components/portfolio-item.component.vue';
 
 defineOptions({
