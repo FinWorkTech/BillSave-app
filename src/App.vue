@@ -1,21 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import Toolbar from './public/components/toolbar.component.vue';
-
-var count = ref(0);
-
-const increment = () => {
-  count.value++;
-};
+import PortfolioForm from './features/portfolio/presentation/components/portfolio-form.component.vue';
 </script>
 
 <template>
   <Toolbar/>
 
-  <div class="w-full h-screen flex items-center justify-center">
-    <div class="text-center">
-      <h1 class="my-3">{{ count }}</h1>
-      <button @click="increment" class="px-5 py-2 bg-blue-500 rounded-xl">Increment</button>
-    </div>
-  </div>
+  <PortfolioForm/>
+  
 </template>
