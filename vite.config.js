@@ -12,8 +12,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@features': path.resolve(__dirname, './src/features'),
-      '@public': path.resolve(__dirname, '.src/public'),
+      '@public': path.resolve(__dirname, './src/public'),
       '@svg': path.resolve(__dirname, './src/assets/images/svg'),
+      '@webp': path.resolve(__dirname, './src/assets/images/webp'),
     }
   }
 })
