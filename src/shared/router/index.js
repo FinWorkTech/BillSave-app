@@ -1,11 +1,25 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+const defaultMeta = { showToolbar: true };
+
 const routes = [
   {
     path: "/home",
     name: "Home",
-    component: () => import("../../public/pages/home.component.vue"),
-    meta: { title: "Home" },
+    component: () => import("@public/pages/home.component.vue"),
+    meta: { title: "Home", ...defaultMeta },
+  },
+  {
+    path: "/sign-up",
+    name: "SignUp",
+    component: () => import("@features/iam/presentation/pages/sign-up-view.component.vue"),
+    meta: { title: "Sign Up", showToolbar: false },
+  },
+  {
+    path: "/sign-in",
+    name: "SignIp",
+    component: () => import("@features/iam/presentation/pages/sign-in-view.component.vue"),
+    meta: { title: "Sign In", showToolbar: false },
   },
   {
     path: "/portfolios",
@@ -15,14 +29,14 @@ const routes = [
         name: "Portfolios",
         component: () =>
           import("@features/portfolio/presentation/pages/portfolio-view.component.vue"),
-        meta: { title: "Portfolios" },
+        meta: { title: "Portfolios", ...defaultMeta },
       },
       {
         path: "create",
         name: "CreatePortfolio",
         component: () =>
           import("@features/portfolio/presentation/pages/portfolio-create-view.component.vue"),
-        meta: { title: "Create Portfolio" },
+        meta: { title: "Create Portfolio", ...defaultMeta },
       },
       {
         path: ":portfolioId",
@@ -32,14 +46,14 @@ const routes = [
             name: "Documents",
             component: () =>
               import("@features/sales/presentation/pages/document-view.component.vue"),
-            meta: { title: "Documents" },
+            meta: { title: "Documents", ...defaultMeta },
           },
           {
             path: "documents/create",
             name: "CreateDocument",
             component: () =>
               import("@features/sales/presentation/pages/document-create-view.component.vue"),
-            meta: { title: "Create Document" },
+            meta: { title: "Create Document", ...defaultMeta },
           },
         ],
       },
