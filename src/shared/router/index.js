@@ -1,45 +1,54 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const routes = [ 
+const routes = [
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('../../public/pages/home.component.vue'),
-    meta: { title: 'Home' }
+    path: "/home",
+    name: "Home",
+    component: () => import("../../public/pages/home.component.vue"),
+    meta: { title: "Home" },
   },
   {
-    path: '/portfolios',
+    path: "/portfolios",
     children: [
       {
-        path: '',
-        name: 'Portfolios',
-        component: () => import('../../features/portfolio/presentation/pages/portfolio-view.component.vue'),
-        meta: { title: 'Portfolios' }
+        path: "",
+        name: "Portfolios",
+        component: () =>
+          import("@features/portfolio/presentation/pages/portfolio-view.component.vue"),
+        meta: { title: "Portfolios" },
       },
       {
-        path: 'create',
-        name: 'CreatePortfolio',
-        component: () => import('../../features/portfolio/presentation/pages/portfolio-create-view.component.vue'),
-        meta: { title: 'Create Portfolio' }
+        path: "create",
+        name: "CreatePortfolio",
+        component: () =>
+          import("@features/portfolio/presentation/pages/portfolio-create-view.component.vue"),
+        meta: { title: "Create Portfolio" },
       },
       {
-        path: ':portfolioId/documents',
-        name: 'Documents',
-        component: () => import('../../features/sales/presentation/pages/document-view.component.vue'),
-        meta: { title: 'Documents' },
+        path: ":portfolioId",
+        children: [
+          {
+            path: "documents",
+            name: "Documents",
+            component: () =>
+              import("@features/sales/presentation/pages/document-view.component.vue"),
+            meta: { title: "Documents" },
+          },
+          {
+            path: "documents/create",
+            name: "CreateDocument",
+            component: () =>
+              import("@features/sales/presentation/pages/document-create-view.component.vue"),
+            meta: { title: "Create Document" },
+          },
+        ],
       },
-      {
-        path: ':portfolioId/documents/create',
-        name: 'CreateDocument',
-        component: () => import('../../features/sales/presentation/pages/document-create-view.component.vue'),
-        meta: { title: 'Create Document' }
-      }
-    ]
+    ],
   },
   {
-    path: '/',
-    redirect: '/home'
-  }
+    path: "/",
+    redirect: "/home",
+  },
 ];
 
 const router = createRouter({
@@ -47,9 +56,10 @@ const router = createRouter({
   routes,
 });
 
+// Actualiza el título dinámicamente
 router.beforeEach((to, from, next) => {
-  const baseTitle = 'BillSave';
-  document.title = `${baseTitle} | ${to.meta.title}`;
+  const baseTitle = "BillSave";
+  document.title = `${baseTitle} | ${to.meta.title || "Default"}`;
   next();
 });
 
