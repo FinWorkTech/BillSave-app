@@ -48,7 +48,7 @@ function closeMenu() {
                         </li>
                         <li class="list-none ml-4">
                             <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
-                                <img src="/src/assets/images/svg/user.svg" alt="User Logo" class="w-7"/>
+                                <img src="@svg/user.svg" alt="User Logo" class="w-7"/>
                             </a>
                         </li>
                     </ul>

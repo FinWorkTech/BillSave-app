@@ -48,9 +48,9 @@ const props = defineProps({
     </div>
 
     <div class="flex flex-row justify-evenly lg:gap-8 mt-4 lg:-mt-0.5">
-      <img src="../../../../assets/images/svg/view.svg" alt="View Logo" class="size-9"/>
-      <img src="../../../../assets/images/svg/edit.svg" alt="Edit Logo" class="size-7"/>
-      <img src="../../../../assets/images/svg/trash.svg" alt="Trash Logo" class="size-7"/>
+      <img src="@svg/view.svg" alt="View Logo" class="size-9"/>
+      <img src="@svg/edit.svg" alt="Edit Logo" class="size-7"/>
+      <img src="@svg/trash.svg" alt="Trash Logo" class="size-7"/>
     </div>
   </div>
 </template>
