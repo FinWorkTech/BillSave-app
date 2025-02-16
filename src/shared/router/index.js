@@ -21,6 +21,23 @@ const routes = [
         name: 'CreatePortfolio',
         component: () => import('../../features/portfolio/presentation/pages/portfolio-create-view.component.vue'),
         meta: { title: 'Create Portfolio' }
+      },
+      {
+        path: ':portfolioId/documents',
+        children: [
+          {
+            path: '',
+            name: 'Documents',
+            component: () => import('../../features/sales/presentation/pages/document-view.component.vue'),
+            meta: { title: 'Documents' }
+          },
+          {
+            path: 'create',
+            name: 'CreateDocument',
+            component: () => import('../../features/sales/presentation/pages/document-create-view.component.vue'),
+            meta: { title: 'Create Document' }
+          }
+        ]
       }
     ]
   },
