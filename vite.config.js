@@ -15,6 +15,7 @@ export default defineConfig({
       '@public': path.resolve(__dirname, './src/public'),
       '@svg': path.resolve(__dirname, './src/assets/images/svg'),
       '@webp': path.resolve(__dirname, './src/assets/images/webp'),
+      '@shared': path.resolve(__dirname, './src/shared'),
     }
   }
 })
