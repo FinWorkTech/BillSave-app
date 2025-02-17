@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { authenticationGuard } from "@features/iam/presentation/guard/authentication.guard.js";
 
 const defaultMeta = { showToolbar: true };
 
@@ -17,7 +18,7 @@ const routes = [
   },
   {
     path: "/sign-in",
-    name: "SignIp",
+    name: "SignIn",
     component: () => import("@features/iam/presentation/pages/sign-in-view.component.vue"),
     meta: { title: "Sign In", showToolbar: false },
   },
@@ -74,7 +75,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const baseTitle = "BillSave";
   document.title = `${baseTitle} | ${to.meta.title || "Default"}`;
-  next();
+
+  authenticationGuard(to, from, next);
 });
 
 export default router;
