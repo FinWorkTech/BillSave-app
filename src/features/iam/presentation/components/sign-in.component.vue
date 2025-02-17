@@ -1,15 +1,22 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { SignInRequest } from '../../domain/model/sign-in.request.js'
+import { useAuthenticationStore } from '../stores/authentication.store.js'; 
 
 defineOptions({
   name: 'sign-in',
 });
 
+const router = useRouter();
+const authenticationStore = useAuthenticationStore();
+
 const username = ref('');
 const password = ref('');
 
 function handleSubmit() {
-  console.log('Form submitted:', { username: username.value, password: password.value });
+  const signInRequest = new SignInRequest(username.value, password.value);
+  authenticationStore.signIn(signInRequest, router);
 }
 </script>
 

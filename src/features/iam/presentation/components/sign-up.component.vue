@@ -1,16 +1,23 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { SignUpRequest } from '../../domain/model/sign-up.request.js'
+import { useAuthenticationStore } from '../stores/authentication.store.js';
 
 defineOptions({
   name: 'sign-up',
 });
+
+const router = useRouter();
+const authenticationStore = useAuthenticationStore();
 
 const fullname = ref('');
 const username = ref('');
 const password = ref('');
 
 function handleSubmit() {
-  console.log('Form submitted:', { fullname: fullname.value, username: username.value, password: password.value });
+  const signUpRequest = new SignUpRequest(fullname.value, username.value, password.value);
+  authenticationStore.signUp(signUpRequest, router);
 }
 </script>
 
