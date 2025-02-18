@@ -43,6 +43,7 @@ onMounted(async () => {
       <portfolio-item 
         v-for="portfolio in portfolios" 
         :key="portfolio.id"
+        :portfolioId="portfolio.id"
         :name="portfolio.name" 
         :date="portfolio.discountDate" 
         :assoc-docs="portfolio.totalDocuments" 

@@ -5,6 +5,10 @@ defineOptions({
 });
 
 const props = defineProps({
+  portfolioId: {
+    type: Number,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -25,8 +29,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer">
-    
+  <router-link :to="`/portfolios/${props.portfolioId}/documents`" class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer no-underline">
     <div class="flex flex-row justify-between lg:justify-start lg:gap-6">
       <span class="text-black font-bold">Name</span>
       <p>{{ name }}</p>
@@ -52,7 +55,7 @@ const props = defineProps({
       <img src="@svg/edit.svg" alt="Edit Logo" class="size-7"/>
       <img src="@svg/trash.svg" alt="Trash Logo" class="size-7"/>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <style scoped>
