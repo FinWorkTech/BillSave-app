@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { AuthService } from '@shared/services/auth.service.js';
+
+const router = useRouter();
 
 defineOptions({
     name: 'toolbar',
@@ -13,6 +17,11 @@ function toggleMenu() {
 
 function closeMenu() {
     isMenuOpen.value = false;
+}
+
+function handleSignOut() {
+    AuthService.signOut(router);
+    closeMenu();
 }
 </script>
 
@@ -65,23 +74,44 @@ function closeMenu() {
                 </div>
 
                 <!-- Mobile Menu -->
-                <ul :class="{'dropdown': true, 'open': isMenuOpen}" class="bg-[#353E49] px-10 lg:hidden absolute right-0 top-0 bottom-0 w-[60%] max-w-[300px] p-4 flex flex-col gap-6 justify-center" id="menu">
-                    <li class="list-none">
-                        <router-link to="/" class="nav__link-about-me flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3" @click="closeMenu">
-                            Home
-                        </router-link>
-                    </li>
-                    <li class="list-none">
-                        <router-link to="/portfolios" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3" @click="closeMenu">
-                            Portfolio
-                        </router-link>
-                    </li>
-                    <li class="list-none">
-                        <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline ml-3" @click="closeMenu">
-                            Reports
-                        </a>
-                    </li>
-                </ul>
+                <div :class="{'dropdown': true, 'open': isMenuOpen}" class="bg-[#353E49] px-10 lg:hidden absolute right-0 top-0 bottom-0 w-[60%] max-w-[300px] p-4 flex flex-col gap-6 justify-center" id="menu">
+
+                    <div class="h-[50%] mt-23 flex flex-col justify-between text-2xl">
+                        
+                        <div>
+                            <ul>
+                                <li class="list-none">
+                                    <router-link to="/" class="nav__link-about-me flex items-center py-4 no-underline text-white tracking-widest hover:underline ml-3" @click="closeMenu">
+                                        Home
+                                    </router-link>
+                                    <div class="w-[80%] h-px bg-gray-300 my-2 lg:hidden"></div>
+                                </li>
+                                
+                                <li class="list-none">
+                                    <router-link to="/portfolios" class="nav__link-contact flex items-center py-4 no-underline text-white tracking-widest hover:underline ml-3" @click="closeMenu">
+                                        Portfolio
+                                    </router-link>
+                                    <div class="w-[80%] h-px bg-gray-300 my-2 lg:hidden"></div>
+                                </li>
+                                <li class="list-none">
+                                    <a href="#" class="nav__link-contact flex items-center py-4 no-underline text-white tracking-widest hover:underline ml-3" @click="closeMenu">
+                                        Reports
+                                    </a>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    
+                        <ul class="dropdown__btn mx-auto rounded-4xl">
+                            <li class="list-none rounded-4xl flex justify-center">
+                                <button class="nav__link-contact flex items-center py-4 px-6 no-underline text-white tracking-widest hover:underline " @click="handleSignOut">
+                                    Sign Out
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -119,6 +149,10 @@ function closeMenu() {
 
 .dropdown.open {
     clip-path: inset(0 0 0 0);
+}
+
+.dropdown__btn {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
 
 </style>
