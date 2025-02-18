@@ -25,7 +25,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14">
+  <div class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer">
     
     <div class="flex flex-row justify-between lg:justify-start lg:gap-6">
       <span class="text-black font-bold">Name</span>
@@ -56,5 +56,5 @@ const props = defineProps({
 </template>
 
 <style scoped>
-
+/* No additional styles needed */
 </style>
