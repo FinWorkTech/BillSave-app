@@ -1,7 +1,14 @@
 <script setup>
-import SearchInput from '../../../../shared/components/search.component.vue';
-import ComboBox from '../../../../shared/components/combo-box.component.vue';
-import DocumentItem from '../components/document-item.component.vue'
+import { ref, onMounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+import ComboBox from '@shared/components/combo-box.component.vue';
+import SearchInput from '@shared/components/search.component.vue';
+
+import DocumentItem from '../components/document-item.component.vue';
+import { fetchDocumentsUseCase } from '@features/sales/application/fetch-documents.usecase.js';
+
+const route = useRoute();
 
 defineOptions({
   name: 'document-view',
@@ -13,97 +20,14 @@ const options = [
   { value: 'option3', text: 'Option 3' }
 ];
 
-const documents = [
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-  {
-    id: '12345',
-    currency: 'S/',
-    dueDate: '20/06/2025',
-    issueDate: '01/01/2025',
-    nominalOrEffective: 'Nominal',
-    nominalValue: '1000'
-  },
-];
+const portfolioId = computed(() => route.params.portfolioId);
 
+const documents = ref([]);
+
+onMounted(async () => {
+  documents.value = await fetchDocumentsUseCase(portfolioId.value);
+  console.log('Documents obtenidos desde onMounted: ', documents.value);
+});
 </script>
 
 <template>
@@ -175,8 +99,9 @@ const documents = [
           :currency="document.currency"
           :dueDate="document.dueDate"
           :issueDate="document.issueDate"
-          :nominalOrEffective="document.nominalOrEffective"
-          :nominalValue="document.nominalValue"
+          :rateType="document.rateType"
+          :rateValue="document.rateValue"
+          :nominalAmount="document.nominalAmount"
         />
       </div>
     </div>

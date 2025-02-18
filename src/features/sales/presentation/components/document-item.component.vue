@@ -21,12 +21,16 @@ const props = defineProps({
     type: String,
     required: true
   },
-  nominalOrEffective: {
+  rateValue: {
+    type: Number,
+    required: true
+  },
+  rateType: {
     type: String,
     required: true
   },
-  nominalValue: {
-    type: String,
+  nominalAmount: {
+    type: Number,
     required: true
   }
 });
@@ -34,7 +38,7 @@ const props = defineProps({
 
 <template>
   <div class="bg-[#DCDCDC] rounded-2xl p-3">
-    <div class="flex flex-row p-2 justify-between">
+    <div class="flex flex-row py-2 px-4 justify-between">
       <span>{{ id }}</span>
       <span>{{ currency }}</span>
     </div>
@@ -43,11 +47,12 @@ const props = defineProps({
       <div class="w-full h-px bg-gray-400 my-2"></div>
     </div>
 
-    <div class="px-4 py-2 flex flex-col gap-2">
-      <span>{{ dueDate }}</span>
-      <span>{{ issueDate }}</span>
-      <span>{{ nominalOrEffective }}</span>
-      <span>{{ nominalValue }}</span>
+    <div class="px-8 py-2 flex flex-col gap-2">
+      <span><span class="font-bold">Due date:</span> {{ dueDate }}</span>
+      <span><span class="font-bold">Issue date:</span> {{ issueDate }}</span>
+      <span><span class="font-bold">Rate value:</span> {{ rateValue }}</span>
+      <span><span class="font-bold">Rate type:</span> {{ rateType }}</span>
+      <span><span class="font-bold">Nominal amount:</span> {{ nominalAmount }}</span>
     </div>
 
     <div class="flex flex-row gap-6 justify-center my-2">
