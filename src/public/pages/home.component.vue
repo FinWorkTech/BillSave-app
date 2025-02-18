@@ -1,4 +1,7 @@
 <script setup>
+import { AuthService } from '@shared/services/auth.service.js';
+
+const username = AuthService.getUsername();
 
 </script>
 
@@ -10,7 +13,7 @@
       <div class="text-white flex flex-row lg:flex-col gap-4 md:gap-8 text-center w-full 
         lg:h-full justify-center md:justify-end lg:justify-center lg:items-center">
 
-        <h1 class="hidden lg:block text-black text-4xl -mt-30 mb-15">Welcome Ana</h1>
+        <h1 class="hidden lg:block text-black text-4xl xl:text-5xl -mt-10 mb-5">Welcome <span class="block mt-3 text-2xl">{{ username }}</span></h1>
 
         
         <router-link to="/portfolios/create" class="inline-block px-8 py-4 lg:px-14 lg:py-8 bg-[#051320] rounded-2xl lg:max-w-xs">
