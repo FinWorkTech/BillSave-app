@@ -1,9 +1,24 @@
 <script setup>
-import SearchInput from '../../../../shared/components/search.component.vue'
+import { ref, onMounted } from 'vue';
+
+import { AuthService } from '@shared/services/auth.service.js';
+import SearchInput from '@shared/components/search.component.vue'
+
 import PortfolioItem from '../components/portfolio-item.component.vue';
+import { fetchPortfoliosUseCase } from '@features/portfolio/application/fetch-portfolios.usecase.js';
+
 
 defineOptions({
   name: 'portfolio-view',
+});
+
+const userId = AuthService.getUserId();
+
+const portfolios = ref([]);
+
+onMounted(async () => {
+  portfolios.value  = await fetchPortfoliosUseCase(userId);
+  console.log('Portfolios obtenidos desde onMounted: ', portfolios.value);
 });
 
 </script>
@@ -20,14 +35,18 @@ defineOptions({
       <search-input placeholder="Search portfolios..." class="lg:max-w-[500px]"/>
     </div>
 
-    <div class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 px-6 overflow-y-auto">
+    <div v-if="portfolios.length === 0" class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] flex items-center justify-center">
+      <p class="text-center text-gray-700">You have no portfolios.</p>
+    </div>
 
-      <portfolio-item name="new_name" date="15/07/2025" assoc-docs="0" tcea="0"/>
-
-      <portfolio-item name="new_name" date="15/07/2025" assoc-docs="0" tcea="0"/>
-
-      <portfolio-item name="new_name" date="15/07/2025" assoc-docs="0" tcea="0"/>
-
+    <div v-else class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px]">
+      <portfolio-item 
+        v-for="portfolio in portfolios" 
+        :key="portfolio.id"
+        :name="portfolio.name" 
+        :date="portfolio.discountDate" 
+        :assoc-docs="portfolio.totalDocuments" 
+        :tcea="portfolio.effectiveAnnualCostRate" />
     </div>
 
   </div>
