@@ -11,4 +11,9 @@ export class AuthService {
     const store = useAuthenticationStore();
     return store.currentUsername;
   }
+
+  static signOut(router) {
+    const store = useAuthenticationStore();
+    store.signOut(router) 
+  }
 }
