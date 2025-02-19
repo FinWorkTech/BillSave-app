@@ -1,8 +1,18 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import { AuthService } from '@shared/services/auth.service.js';
 
+import { fetchPortfolioSummary } from '@shared/services/portfolio-summary.service.js';
+
+const userId = AuthService.getUserId();
 const username = AuthService.getUsername();
 
+const portfolioSummary = ref({ activePacks: 0, totalDocuments: 0, averageEffectiveAnnualCostRate: 0 });
+
+onMounted(async () => {
+  portfolioSummary.value = await fetchPortfolioSummary(userId);
+  console.log("portfolioSummary", portfolioSummary.value);
+});
 </script>
 
 <template>
@@ -38,20 +48,20 @@ const username = AuthService.getUsername();
       <div class="flex flex-col gap-4 text-center justify-center border border-gray-300 
         shadow-lg p-8 rounded-lg w-full md:w-[280px] lg:w-[350px] md:h-[230px] lg:h-[300px] text-xl lg:text-2xl">
         <span>Active Portfolios</span>
-        <span class="text-[#de7728]">0</span>
+        <span class="text-[#de7728]">{{ portfolioSummary.activePacks }}</span>
       </div>
 
       <div class="flex flex-col gap-3 text-center justify-center border border-gray-300 
         shadow-lg p-8 rounded-lg w-full md:w-[250px] lg:w-[350px] md:h-[230px] lg:h-[300px] text-xl lg:text-2xl">
         <span>Total Documents</span>
         <span>(bills/invoices)</span>
-        <span class="text-[#de7728]">0</span>
+        <span class="text-[#de7728]">{{ portfolioSummary.totalDocuments }}</span>
       </div>
 
       <div class="flex flex-col gap-4 text-center justify-center border border-gray-300 
         shadow-lg p-8 rounded-lg w-full md:w-[250px] lg:w-[350px] md:h-[230px] lg:h-[300px] text-xl lg:text-2xl">
         <span>Average TCEA of portfolios</span>
-        <span class="text-[#de7728]">0</span>
+        <span class="text-[#de7728]">{{ portfolioSummary.averageEffectiveAnnualCostRate }}</span>
       </div>
 
     </div>
