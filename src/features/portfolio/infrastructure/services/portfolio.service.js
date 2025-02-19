@@ -11,4 +11,20 @@ export class PortfolioService extends IPortfolioService {
     
     return PortfolioMapper.toEntityList(response.data);
   }
+
+  async createPortfolio(portfolio) {
+    const response = await http.post(this.resourceEndpoint, PortfolioMapper.toRaw(portfolio));
+    
+    return PortfolioMapper.toEntity(response.data);
+  }
+
+  async deletePortfolio(portfolioId) {
+    return await http.delete(`${this.resourceEndpoint}/${portfolioId}`);
+  }
+
+  async updatePortfolio(portfolio) {
+    const response = await http.put(`${this.resourceEndpoint}/${portfolio.id}`, PortfolioMapper.toRaw(portfolio));
+    
+    return PortfolioMapper.toEntity(response.data);
+  }
 }
