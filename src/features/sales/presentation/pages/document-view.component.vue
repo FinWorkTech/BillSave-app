@@ -91,8 +91,12 @@ onMounted(async () => {
         <search-input placeholder="Search " class="lg:max-w-[500px]"/>
       </div>
     </div>
+    
+    <div v-if="documents.length === 0" class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] flex items-center justify-center">
+      <p class="text-center text-gray-700">This portfolio has no documents</p>
+    </div>
 
-    <div class="flex flex-row flex-wrap gap-6 px-6 justify-between overflow-auto h-[500px]">
+    <div v-else class="bg-[#afb6bd] flex flex-row flex-wrap gap-6 px-6 justify-between overflow-auto h-[500px]">
       <div v-for="document in documents" :key="document.id" class="mb-4 w-full md:max-w-[330px] lg:max-w-[350px] xl:max-w-[450px]">
         <document-item
           :id="document.id"
