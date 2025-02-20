@@ -43,6 +43,13 @@ const routes = [
         path: ":portfolioId",
         children: [
           {
+            path: "edit", 
+            name: "EditPortfolio",
+            component: () =>
+              import("@features/portfolio/presentation/pages/portfolio-create-view.component.vue"),
+            meta: { title: "Edit Portfolio", ...defaultMeta },
+          },
+          {
             path: "documents",
             name: "Documents",
             component: () =>
