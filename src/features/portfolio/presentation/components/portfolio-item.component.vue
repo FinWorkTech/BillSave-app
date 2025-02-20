@@ -1,4 +1,8 @@
 <script setup>
+import { useRouter } from 'vue-router';
+import { deletePortfolioUseCase} from '@features/portfolio/application/delete-portfolio.usecase.js';
+
+const router = useRouter();
 
 defineOptions({
   name: 'portfolio-item',
@@ -24,12 +28,22 @@ const props = defineProps({
   tcea: {
     type: Number,
     required: true
+  },
+  refreshPortfolios: {
+    type: Function,
+    required: true
   }
 });
+
+const deletePortfolio = async () => {
+  await deletePortfolioUseCase(props.portfolioId);
+  props.refreshPortfolios();
+};
+
 </script>
 
 <template>
-  <router-link :to="`/portfolios/${props.portfolioId}/documents`" class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer no-underline">
+  <div class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer no-underline">
     <div class="flex flex-row justify-between lg:justify-start lg:gap-6">
       <span class="text-black font-bold">Name</span>
       <p>{{ name }}</p>
@@ -51,13 +65,47 @@ const props = defineProps({
     </div>
 
     <div class="flex flex-row justify-evenly lg:gap-8 mt-4 lg:-mt-0.5">
-      <img src="@svg/view.svg" alt="View Logo" class="size-9"/>
-      <img src="@svg/edit.svg" alt="Edit Logo" class="size-7"/>
-      <img src="@svg/trash.svg" alt="Trash Logo" class="size-7"/>
+
+      <router-link :to="`/portfolios/${props.portfolioId}/documents`">
+        <button class="view-button rounded-4xl p-3">
+          <img src="@svg/view.svg" alt="View Logo" class="size-7 "/>
+        </button>
+      </router-link>
+
+      <button class="edit-button rounded-4xl p-3">
+        <img src="@svg/edit.svg" alt="Edit Logo" class="size-7 "/>
+      </button>
+
+      <button @click="deletePortfolio" class="delete-button rounded-4xl p-3">
+        <img src="@svg/trash.svg" alt="Trash Logo" class="size-7 "/>
+      </button>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <style scoped>
-/* No additional styles needed */
+
+.delete-button {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.5);
+}
+
+.edit-button {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.edit-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 255, 0.5);
+}
+
+.view-button {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.view-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.5);
+}
 </style>

@@ -16,11 +16,12 @@ const userId = AuthService.getUserId();
 
 const portfolios = ref([]);
 
-onMounted(async () => {
-  portfolios.value  = await fetchPortfoliosUseCase(userId);
-  console.log('Portfolios obtenidos desde onMounted: ', portfolios.value);
-});
+const loadPortfolios = async () => {
+  portfolios.value = await fetchPortfoliosUseCase(userId);
+  console.log('Portfolios actualizados:', portfolios.value);
+};
 
+onMounted(loadPortfolios);
 </script>
 
 <template>
@@ -39,7 +40,7 @@ onMounted(async () => {
       <p class="text-center text-gray-700">You have no portfolios.</p>
     </div>
 
-    <div v-else class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px]">
+    <div v-else class="bg-[#afb6bd] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] max-h-[calc(90vh-10rem)]">
       <portfolio-item 
         v-for="portfolio in portfolios" 
         :key="portfolio.id"
@@ -47,7 +48,8 @@ onMounted(async () => {
         :name="portfolio.name" 
         :date="portfolio.discountDate" 
         :assoc-docs="portfolio.totalDocuments" 
-        :tcea="portfolio.effectiveAnnualCostRate" />
+        :tcea="portfolio.effectiveAnnualCostRate" 
+        :refreshPortfolios="loadPortfolios"/>
     </div>
 
   </div>

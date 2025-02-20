@@ -1,22 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
+import { AuthService } from '@shared/services/auth.service.js';
 
 defineOptions({
   name: 'portfolio-form',
 });
 
+const emit = defineEmits(['submit']);
+
+const userId = AuthService.getUserId();
+
 const portfolioName = ref('');
-const portfolioDate = ref('');
+const portfolioDiscountDate = ref('');
 
 function handleSubmit() {
-  // Handle form submission logic here
-  console.log('Form submitted:', { portfolioName: portfolioName.value, portfolioDate: portfolioDate.value });
+
+  if (!portfolioName.value || !portfolioDiscountDate.value) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  emit('submit', {
+    userId: userId,
+    name: portfolioName.value,
+    discountDate: portfolioDiscountDate.value,
+  });
+
+  portfolioName.value = '';
+  portfolioDiscountDate.value = ''; 
 }
 
 function handleCancel() {
-  // Handle cancel logic here
   portfolioName.value = '';
-  portfolioDate.value = '';
+  portfolioDiscountDate.value = '';
 }
 </script>
 
@@ -33,7 +49,7 @@ function handleCancel() {
 
       <div class="bg-[#d6d7d8] rounded-2xl shadow-lg">
         <label for="portfolioDate" class="block text-gray-700"></label>
-        <input type="date" id="portfolioDate" v-model="portfolioDate"
+        <input type="date" id="portfolioDate" v-model="portfolioDiscountDate"
           class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#353e49] focus:border-transparent"/>
       </div>
 
