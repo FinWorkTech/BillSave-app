@@ -17,4 +17,9 @@ export class DocumentService extends IDocumentService {
     console.log("Document created: ", response.data)
     return response;
   }
+
+  async deleteDocument(documentId, portfolioId) {    
+    const response = await http.delete(`${this.resourceEndpoint}/${documentId}?portfolioId=${portfolioId}`);
+    return response;
+  }
 }

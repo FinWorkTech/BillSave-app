@@ -8,4 +8,8 @@ export class IDocumentService {
   async createDocument(document) {
     throw new Error("Method 'createDocument' must be implemented");
   }
+
+  async deleteDocument(documentId, portfolioId) {    
+    throw new Error("Method 'deleteDocument' must be implemented");
+  }
 }
