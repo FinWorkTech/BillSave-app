@@ -11,4 +11,10 @@ export class DocumentService extends IDocumentService {
     console.log("Portfolio with ", portfolioId, " documents: ", response.data)
     return DocumentMapper.toEntityList(response.data);
   }
+
+  async createDocument(document) {
+    const response = await http.post(this.resourceEndpoint, DocumentMapper.toRaw(document));
+    console.log("Document created: ", response.data)
+    return response;
+  }
 }
