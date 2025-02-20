@@ -43,7 +43,7 @@ const deletePortfolio = async () => {
 </script>
 
 <template>
-  <div class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer no-underline">
+  <div class="portfolio-item flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white p-8 rounded-2xl my-4 xl:px-14 transition duration-300 ease-in-out transform hover:bg-gray-100 hover:shadow-lg no-underline">
     <div class="flex flex-row justify-between lg:justify-start lg:gap-6">
       <span class="text-black font-bold">Name</span>
       <p>{{ name }}</p>
@@ -67,16 +67,18 @@ const deletePortfolio = async () => {
     <div class="flex flex-row justify-evenly lg:gap-8 mt-4 lg:-mt-0.5">
 
       <router-link :to="`/portfolios/${props.portfolioId}/documents`">
-        <button class="view-button rounded-4xl p-3">
+        <button class="view-button rounded-4xl p-3 hover:cursor-pointer">
           <img src="@svg/view.svg" alt="View Logo" class="size-7 "/>
         </button>
       </router-link>
 
-      <button class="edit-button rounded-4xl p-3">
-        <img src="@svg/edit.svg" alt="Edit Logo" class="size-7 "/>
-      </button>
+      <router-link :to="`/portfolios/${props.portfolioId}/edit`">
+        <button class="edit-button rounded-4xl p-3 hover:cursor-pointer">
+          <img src="@svg/edit.svg" alt="Edit Logo" class="size-7 "/>
+        </button>
+      </router-link>
 
-      <button @click="deletePortfolio" class="delete-button rounded-4xl p-3">
+      <button @click="deletePortfolio" class="delete-button rounded-4xl p-3 hover:cursor-pointer">
         <img src="@svg/trash.svg" alt="Trash Logo" class="size-7 "/>
       </button>
     </div>

@@ -6,13 +6,18 @@ defineOptions({
   name: 'portfolio-form',
 });
 
-const emit = defineEmits(['submit']);
 
+// get user id 
 const userId = AuthService.getUserId();
 
+// variables for form fields
 const portfolioName = ref('');
 const portfolioDiscountDate = ref('');
 
+// emit event to parent component
+const emit = defineEmits(['submit']);
+
+// handle form submit event
 function handleSubmit() {
 
   if (!portfolioName.value || !portfolioDiscountDate.value) {
@@ -30,6 +35,7 @@ function handleSubmit() {
   portfolioDiscountDate.value = ''; 
 }
 
+// handle cancel button click event
 function handleCancel() {
   portfolioName.value = '';
   portfolioDiscountDate.value = '';
