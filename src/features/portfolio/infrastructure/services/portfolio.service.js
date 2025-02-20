@@ -23,8 +23,7 @@ export class PortfolioService extends IPortfolioService {
   }
 
   async updatePortfolio(portfolio) {
-    const response = await http.put(`${this.resourceEndpoint}/${portfolio.id}`, PortfolioMapper.toRaw(portfolio));
-    
-    return PortfolioMapper.toEntity(response.data);
+
+    return await http.put(`${this.resourceEndpoint}/${portfolio.id}`, PortfolioMapper.toRaw(portfolio));
   }
 }
