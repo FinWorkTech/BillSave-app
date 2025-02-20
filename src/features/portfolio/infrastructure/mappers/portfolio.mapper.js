@@ -16,4 +16,12 @@ export class PortfolioMapper {
   static toEntityList(rawPortfolios) {
     return rawPortfolios.map((rawPortfolio) => this.toEntity(rawPortfolio));
   }
+
+  static toRaw(portfolio) {
+    return {
+      name: portfolio.name,
+      discountDate: portfolio.discountDate,
+      userId: portfolio.userId,
+    };
+  }
 }
