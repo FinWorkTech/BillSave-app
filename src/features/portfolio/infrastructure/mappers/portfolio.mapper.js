@@ -22,6 +22,7 @@ export class PortfolioMapper {
       name: portfolio.name,
       discountDate: portfolio.discountDate,
       userId: portfolio.userId,
+      id: portfolio.id ?? null,
     };
   }
 }
