@@ -82,7 +82,7 @@ onMounted(async () => {
 
       <div class="flex flex-col lg:flex-row lg:justify-between py-2 gap-3 ">
       
-      <router-link to="/portfolios/create" class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center">
+      <router-link :to="`/portfolios/${portfolioId}/documents/create`" class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center">
         <span>Create</span>
       </router-link>
 
