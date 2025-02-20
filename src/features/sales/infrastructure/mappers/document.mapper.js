@@ -19,4 +19,17 @@ export class DocumentMapper {
   static toEntityList(rawDocuments) {
     return rawDocuments.map((rawDocument) => this.toEntity(rawDocument));
   }
+
+  static toRaw(document) {
+    return {
+      code: document.code,
+      issueDate: document.issueDate,
+      dueDate: document.dueDate,
+      rateType: document.rateType,
+      rateValue: document.rateValue,
+      currency: document.currency,
+      nominalAmount: document.nominalAmount,
+      portfolioId: document.portfolioId,
+    };
+  }
 }
