@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 import { AuthService } from '@shared/services/auth.service.js';
 import SearchInput from '@shared/components/search.component.vue'
@@ -15,13 +15,19 @@ defineOptions({
 const userId = AuthService.getUserId();
 
 const portfolios = ref([]);
+const searchQuery = ref('');
 
 const loadPortfolios = async () => {
   portfolios.value = await fetchPortfoliosUseCase(userId);
-  console.log('Portfolios actualizados:', portfolios.value);
 };
 
 onMounted(loadPortfolios);
+
+const filteredPortfolios = computed(() => {
+  if (!searchQuery.value) return portfolios.value;
+
+  return portfolios.value.filter(portfolio => portfolio.name.toLowerCase().includes(searchQuery.value.toLowerCase()));
+});
 </script>
 
 <template>
@@ -33,16 +39,16 @@ onMounted(loadPortfolios);
         <span>Create</span>
       </router-link>
 
-      <search-input placeholder="Search portfolios..." class="lg:max-w-[500px]"/>
+      <search-input placeholder="Find a portfolio..." class="lg:max-w-[500px]" v-model="searchQuery"/>
     </div>
 
-    <div v-if="portfolios.length === 0" class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] flex items-center justify-center">
+    <div v-if="filteredPortfolios.length === 0" class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] flex items-center justify-center">
       <p class="text-center text-gray-700">You have no portfolios.</p>
     </div>
 
     <div v-else class="bg-[#afb6bd] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] max-h-[calc(90vh-10rem)]">
       <portfolio-item 
-        v-for="portfolio in portfolios" 
+        v-for="portfolio in filteredPortfolios" 
         :key="portfolio.id"
         :portfolioId="portfolio.id"
         :name="portfolio.name" 
