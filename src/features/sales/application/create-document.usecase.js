@@ -5,9 +5,9 @@ export async function createDocumentUseCase(document) {
 
     const documentService = new DocumentService();
 
-    const document = await documentService.createDocument(document);
+    const createdDocument = await documentService.createDocument(document);
 
-    return document;
+    return createdDocument;
   }
   catch(error) {
     throw error;
