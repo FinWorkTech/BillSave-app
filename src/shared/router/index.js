@@ -63,6 +63,13 @@ const routes = [
               import("@features/sales/presentation/pages/document-create-view.component.vue"),
             meta: { title: "Create Document", ...defaultMeta },
           },
+          {
+            path: "documents/:documentId/edit",
+            name: "EditDocument",
+            component: () =>
+              import("@features/sales/presentation/pages/document-create-view.component.vue"),
+            meta: { title: "Edit Document", ...defaultMeta },
+          }
         ],
       },
     ],
