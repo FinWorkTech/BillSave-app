@@ -16,16 +16,26 @@ const props = defineProps({
   paddingY: {
     type: String,
     default: 'py-2'
+  },
+
+  modelValue: {
+    type: String,
+    default: ''
   }
 });
+
+const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>
   <div class="relative w-full">
-    <select :class="`w-full px-4 ${props.paddingY} rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#66798a] focus:border-transparent appearance-none`">
+    <select 
+      :value="modelValue"
+      @change="emit('update:modelValue', $event.target.value)"
+      :class="`w-full px-4 ${props.paddingY} rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#66798a] focus:border-transparent appearance-none`">
       <option value="">{{ placeholder }}</option>
       <option v-for="option in options" :key="option.value" :value="option.value">{{ option.text }}</option>
     </select>
-    <img src="../../assets/images/svg/down.svg" alt="Arrow Down" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none"/>
+    <img src="@svg/down.svg" alt="Arrow Down" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 pointer-events-none"/>
   </div>
 </template>
