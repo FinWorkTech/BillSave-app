@@ -7,6 +7,7 @@ import SearchInput from '@shared/components/search.component.vue';
 
 import DocumentItem from '../components/document-item.component.vue';
 import { fetchDocumentsUseCase } from '@features/sales/application/fetch-documents.usecase.js';
+import { deleteDocumentUseCase } from '@features/sales/application/delete-document.usecase.js';
 
 const route = useRoute();
 
@@ -24,10 +25,16 @@ const portfolioId = computed(() => route.params.portfolioId);
 
 const documents = ref([]);
 
-onMounted(async () => {
+const loadDocuments = async () => {
   documents.value = await fetchDocumentsUseCase(portfolioId.value);
-  console.log('Documents obtenidos desde onMounted: ', documents.value);
-});
+};
+
+const handleDeleteDocument = async ({ documentId, portfolioId}) => {
+  await deleteDocumentUseCase(documentId, portfolioId);
+  loadDocuments();
+};
+
+onMounted(loadDocuments);
 </script>
 
 <template>
@@ -96,16 +103,20 @@ onMounted(async () => {
       <p class="text-center text-gray-700">This portfolio has no documents</p>
     </div>
 
-    <div v-else class="bg-[#afb6bd] flex flex-row flex-wrap gap-6 px-6 justify-between overflow-auto h-[500px]">
-      <div v-for="document in documents" :key="document.id" class="mb-4 w-full md:max-w-[330px] lg:max-w-[350px] xl:max-w-[450px]">
+    <div v-else class="bg-[#afb6bd] flex flex-row flex-wrap gap-6 px-6 py-4 rounded-2xl justify-between overflow-auto h-[500px]">
+      <div v-for="document in documents" :key="document.id" class=" w-full md:max-w-[330px] lg:max-w-[350px] xl:max-w-[450px]">
         <document-item
-          :id="document.id"
+          :code="document.code"
           :currency="document.currency"
           :dueDate="document.dueDate"
           :issueDate="document.issueDate"
           :rateType="document.rateType"
           :rateValue="document.rateValue"
           :nominalAmount="document.nominalAmount"
+
+          :documentId="document.id"
+          :portfolioId="document.portfolioId"
+          @delete-document="handleDeleteDocument"
         />
       </div>
     </div>

@@ -5,7 +5,8 @@ defineOptions({
 });
 
 const props = defineProps({
-  id: {
+
+  code: {
     type: String,
     required: true
   },
@@ -32,14 +33,24 @@ const props = defineProps({
   nominalAmount: {
     type: Number,
     required: true
-  }
+  },
+  documentId: {
+    type: String,
+    required: true
+  },
+  portfolioId: {
+    type: String,
+    required: true
+  },
 });
+
+const emit = defineEmits(['delete-document']);
 </script>
 
 <template>
   <div class="bg-[#DCDCDC] rounded-2xl p-3">
     <div class="flex flex-row py-2 px-4 justify-between">
-      <span>{{ id }}</span>
+      <span>{{ code }}</span>
       <span>{{ currency }}</span>
     </div>
 
@@ -56,13 +67,17 @@ const props = defineProps({
     </div>
 
     <div class="flex flex-row gap-6 justify-center my-2">
-      <button class="bg-[#66798a] px-6 py-2 rounded-4xl">
+      <button class="button bg-[#66798a] px-6 py-2 rounded-4xl">
         <span>Edit</span>
       </button>
 
-      <button class="bg-[#66798a] px-6 py-2 rounded-4xl">
+      <button class="button bg-[#66798a] px-6 py-2 rounded-4xl" @click="emit('delete-document', { documentId, portfolioId })">
         <span>Delete</span>
       </button>
     </div>
   </div>
 </template>
+
+<style scoped>
+
+</style>
