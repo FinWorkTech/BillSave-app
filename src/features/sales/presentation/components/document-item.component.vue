@@ -35,7 +35,7 @@ const props = defineProps({
     required: true
   },
   documentId: {
-    type: String,
+    type: Number,
     required: true
   },
   portfolioId: {
