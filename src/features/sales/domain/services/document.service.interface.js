@@ -12,4 +12,8 @@ export class IDocumentService {
   async deleteDocument(documentId, portfolioId) {    
     throw new Error("Method 'deleteDocument' must be implemented");
   }
+
+  async updateDocument(document) {
+    throw new Error("Method 'updateDocument' must be implemented");
+  }
 }

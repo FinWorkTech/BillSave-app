@@ -22,4 +22,9 @@ export class DocumentService extends IDocumentService {
     const response = await http.delete(`${this.resourceEndpoint}/${documentId}?portfolioId=${portfolioId}`);
     return response;
   }
+
+  async updateDocument(document) {
+    const response = await http.put(this.resourceEndpoint, DocumentMapper.toRaw(document));
+    return response;
+  }
 }
