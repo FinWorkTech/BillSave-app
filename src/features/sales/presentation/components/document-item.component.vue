@@ -67,9 +67,11 @@ const emit = defineEmits(['delete-document']);
     </div>
 
     <div class="flex flex-row gap-6 justify-center my-2">
-      <button class="button bg-[#66798a] px-6 py-2 rounded-4xl">
-        <span>Edit</span>
-      </button>
+      <router-link :to="`/portfolios/${props.portfolioId}/documents/${props.documentId}/edit`">
+        <button class="button bg-[#66798a] px-6 py-2 rounded-4xl">
+          <span>Edit</span>
+        </button>
+      </router-link>
 
       <button class="button bg-[#66798a] px-6 py-2 rounded-4xl" @click="emit('delete-document', { documentId, portfolioId })">
         <span>Delete</span>
