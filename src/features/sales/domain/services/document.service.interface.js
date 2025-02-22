@@ -5,6 +5,10 @@ export class IDocumentService {
     throw new Error("Method 'fetchDocuments' must be implemented");
   }
 
+  async fetchDocument(documentId) {
+    throw new Error("Method 'fetchDocument' must be implemented");
+  }
+
   async createDocument(document) {
     throw new Error("Method 'createDocument' must be implemented");
   }

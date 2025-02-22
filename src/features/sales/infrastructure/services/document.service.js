@@ -8,13 +8,16 @@ export class DocumentService extends IDocumentService {
 
   async fetchDocuments(portfolioId) {
     const response = await http.get(`${this.resourceEndpoint}?portfolioId=${portfolioId}`);
-    console.log("Portfolio with ", portfolioId, " documents: ", response.data)
     return DocumentMapper.toEntityList(response.data);
+  }
+
+  async fetchDocument(documentId) {
+    const response = await http.get(`${this.resourceEndpoint}/${documentId}`);
+    return DocumentMapper.toEntity(response.data);
   }
 
   async createDocument(document) {
     const response = await http.post(this.resourceEndpoint, DocumentMapper.toRaw(document));
-    console.log("Document created: ", response.data)
     return response;
   }
 
@@ -24,7 +27,7 @@ export class DocumentService extends IDocumentService {
   }
 
   async updateDocument(document) {
-    const response = await http.put(this.resourceEndpoint, DocumentMapper.toRaw(document));
+    const response = await http.put(`${this.resourceEndpoint}/${document.id}`, DocumentMapper.toRaw(document));
     return response;
   }
 }
