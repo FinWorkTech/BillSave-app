@@ -18,7 +18,6 @@ const loading = ref(false);
 const errorMessage = ref('');
 
 const documentId = parseInt(useRouteParams('documentId').value);
-console.log('Document ID:', documentId);
 
 // function to create a document
 async function createDocument(documentPayload) {
@@ -31,7 +30,6 @@ async function createDocument(documentPayload) {
 // function to update a document
 async function updateDocument(documentPayload) {
   const response = await updateDocumentUseCase(documentPayload);
-  console.log('Document updated respose:', response);
   alert('Document updated successfully! 🎉');
   router.push(`/portfolios/${documentPayload.portfolioId}/documents`);
 }
@@ -42,7 +40,6 @@ async function handleCreateOrEditDocument(documentData) {
   errorMessage.value = '';
 
   const documentPayLoad = { ...documentData, id: documentId };
-  console.log("Document payload:", documentPayLoad);
 
   try {
     if (documentId) {
@@ -53,7 +50,12 @@ async function handleCreateOrEditDocument(documentData) {
     } 
     
   } catch (error) {
-    console.error('Error creating document:', error);
+
+    if (documentId) {
+      errorMessage.value = 'Failed to update document. Please try again.';
+      return;
+    }
+    
     errorMessage.value = 'Failed to create document. Please try again.';
   } finally {
     loading.value = false;

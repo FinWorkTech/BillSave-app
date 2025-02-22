@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouteParams } from '@shared/composable/use-route-params.composable.js';
+import { useDocumentStore } from '@features/sales/presentation/store/document.store.js';
 
 import ComboBox from '@shared/components/combo-box.component.vue'
+
+const documentStore = useDocumentStore();
 
 defineOptions({
   name: 'document-form',
@@ -16,6 +19,8 @@ const rateType = ref('');
 const rateValue = ref(0.0);
 const issueDate = ref('');
 const nominalAmount = ref('');
+
+const documentId = parseInt(useRouteParams('documentId').value);
 const portfolioId = parseInt(useRouteParams('portfolioId').value);
 
 // variables for combo box to select rate type
@@ -57,6 +62,10 @@ function handleSubmit() {
     portfolioId: portfolioId
   };
 
+  if (documentId) {
+    documentStore.updateDocumentById(documentId, rawData);
+  }
+
   emit('submit', rawData);
   
   handleClear();
@@ -77,6 +86,22 @@ function handleClear() {
   issueDate.value = '';
   nominalAmount.value = '';
 }
+
+const loadDocumentDataIntoTheForm = async () => {
+  const documentFound = await documentStore.fetchDocumentById(documentId);
+
+  if (documentFound) {
+    code.value = documentFound.code;
+    dueDate.value = documentFound.dueDate;
+    currency.value = documentFound.currency;
+    rateType.value = documentFound.rateType;
+    rateValue.value = documentFound.rateValue;
+    issueDate.value = documentFound.issueDate;
+    nominalAmount.value = documentFound.nominalAmount;
+  }
+}
+
+onMounted(loadDocumentDataIntoTheForm);
 </script>
 
 <template>
