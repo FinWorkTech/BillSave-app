@@ -55,10 +55,10 @@ function handleSignOut() {
                                 Reports
                             </a>
                         </li>
-                        <li class="list-none ml-4">
-                            <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
-                                <img src="@svg/user.svg" alt="User Logo" class="w-7"/>
-                            </a>
+                        <li class="list-none">
+                                <button class="nav__link-contact rounded-full flex items-center p-4 px-8 no-underline bg-gray-600 text-white tracking-widest hover:bg-[#6d7b8d] cursor-pointer font-semibold" @click="handleSignOut">
+                                    Sign Out
+                                </button>
                         </li>
                     </ul>
                 </div>
@@ -104,7 +104,7 @@ function handleSignOut() {
                     
                         <ul class="dropdown__btn mx-auto rounded-4xl">
                             <li class="list-none rounded-4xl flex justify-center">
-                                <button class="nav__link-contact flex items-center py-4 px-6 no-underline text-white tracking-widest hover:underline " @click="handleSignOut">
+                                <button class="nav__link-contact flex items-center py-4 px-4 no-underline text-white tracking-widest hover:underline " @click="handleSignOut">
                                     Sign Out
                                 </button>
                             </li>
