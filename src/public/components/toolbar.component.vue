@@ -51,9 +51,9 @@ function handleSignOut() {
                             </router-link>
                         </li>
                         <li class="list-none">
-                            <a href="#" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
+                            <router-link to="/reports" class="nav__link-contact flex text-[1.2rem] items-center py-4 no-underline text-white tracking-widest font-medium hover:underline">
                                 Reports
-                            </a>
+                            </router-link>
                         </li>
                         <li class="list-none">
                                 <button class="nav__link-contact rounded-full flex items-center p-4 px-8 no-underline bg-gray-600 text-white tracking-widest hover:bg-[#6d7b8d] cursor-pointer font-semibold" @click="handleSignOut">
@@ -94,9 +94,9 @@ function handleSignOut() {
                                     <div class="w-[80%] h-px bg-gray-300 my-2 lg:hidden"></div>
                                 </li>
                                 <li class="list-none">
-                                    <a href="#" class="nav__link-contact flex items-center py-4 no-underline text-white tracking-widest hover:underline ml-3" @click="closeMenu">
+                                    <router-link to="/reports" class="nav__link-contact flex items-center py-4 no-underline text-white tracking-widest hover:underline ml-3" @click="closeMenu">
                                         Reports
-                                    </a>
+                                    </router-link>
                                     
                                 </li>
                             </ul>
