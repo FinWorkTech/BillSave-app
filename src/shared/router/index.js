@@ -23,6 +23,12 @@ const routes = [
     meta: { title: "Sign In", showToolbar: false },
   },
   {
+    path: "/reports",
+    name: "Reports",
+    component: () => import("@features/reporting/presentation/pages/report-view.component.vue"),
+    meta: { title: "Reports", ...defaultMeta },
+  },
+  {
     path: "/portfolios",
     children: [
       {
