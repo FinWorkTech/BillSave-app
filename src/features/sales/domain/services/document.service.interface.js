@@ -9,6 +9,10 @@ export class IDocumentService {
     throw new Error("Method 'fetchDocument' must be implemented");
   }
 
+  async fetchDocumentByDateRange(startDate, endDate) {
+    throw new Error("Method 'fetchDocumentByDateRange' must be implemented");
+  }
+
   async createDocument(document) {
     throw new Error("Method 'createDocument' must be implemented");
   }

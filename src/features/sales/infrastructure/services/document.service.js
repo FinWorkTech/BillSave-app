@@ -16,6 +16,12 @@ export class DocumentService extends IDocumentService {
     return DocumentMapper.toEntity(response.data);
   }
 
+  async fetchDocumentByDateRange(startDate, endDate) {
+    const response = await http.get(`${this.resourceEndpoint}/daterange?startDate=${startDate}&endDate=${endDate}`);
+
+    return DocumentMapper.toEntityList(response.data);
+  }
+
   async createDocument(document) {
     const response = await http.post(this.resourceEndpoint, DocumentMapper.toRaw(document));
     return response;
