@@ -2,9 +2,19 @@ import { defineStore } from "pinia";
 import { signInUseCase } from "../../application/sign-in.usecase.js";
 import { signUpUseCase } from "../../application/sign-up.usecase.js";
 
+const AUTH_STORAGE_KEY = "authData";
+
 export const useAuthenticationStore = defineStore("authentication", {
   
-  state: () => ({ signedIn: false, userId: null, username: "" }),
+  state: () => {
+    const authData = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)) || {};
+
+    return {
+      signedIn: authData.signedIn || false,
+      userId: authData.userId || null,
+      username: authData.username || "",
+    }
+  },
 
   getters: {
     isSignedIn: (state) => state.signedIn,
@@ -22,7 +32,15 @@ export const useAuthenticationStore = defineStore("authentication", {
         this.userId = signInResponse.id;
         this.username = signInResponse.username;
 
+        const authData = {
+          userId: this.userId,
+          username: this.username,
+          signedIn: this.signedIn,
+        };
+
         localStorage.setItem("token", signInResponse.token);
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authData));
+
         router.push('/home');
 
       } catch (error) {
@@ -53,6 +71,7 @@ export const useAuthenticationStore = defineStore("authentication", {
       this.username = "";
 
       localStorage.removeItem("token");
+      localStorage.removeItem(AUTH_STORAGE_KEY);
       
       router.push('/sign-in');
     },
