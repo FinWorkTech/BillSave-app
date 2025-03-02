@@ -1,13 +1,22 @@
 <script setup>
+
+// Importing Vue Composition API
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
+// Importing Shared Components
 import ComboBox from '@shared/components/combo-box.component.vue';
 import SearchInput from '@shared/components/search.component.vue';
 
 import DocumentItem from '../components/document-item.component.vue';
+
+// Importing Use Cases
 import { fetchDocumentsUseCase } from '@features/sales/application/fetch-documents.usecase.js';
 import { deleteDocumentUseCase } from '@features/sales/application/delete-document.usecase.js';
+
+// Importing Sunat Store and StoreToRefs to access the store
+import { useSunatStore } from '@shared/presentation/store/sunat.store.js';
+import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 
@@ -21,20 +30,56 @@ const options = [
   { value: 'option3', text: 'Option 3' }
 ];
 
+// Declaring variables and computed properties
+const documents = ref([]);
+const exchangeRate = ref(0.0);
 const portfolioId = computed(() => route.params.portfolioId);
 
-const documents = ref([]);
+// Accessing Sunat Store and storeToRefs to access the store
+const sunatStore = useSunatStore();
+const { salePrice, date } = storeToRefs(sunatStore);
 
+// Methods
+
+// Load documents from the database
 const loadDocuments = async () => {
   documents.value = await fetchDocumentsUseCase(portfolioId.value);
 };
 
+// Delete a document from the database
 const handleDeleteDocument = async ({ documentId, portfolioId}) => {
   await deleteDocumentUseCase(documentId, portfolioId);
   loadDocuments();
 };
 
-onMounted(loadDocuments);
+// Load the exchange rate from the Sunat API
+const loadExchangeRate = async () => {
+  const today = new Date().toISOString().split('T')[0];
+
+  sunatStore.loadExchangeRateFromStorage();
+
+  if (date.value !== today) {
+    await sunatStore.fetchExchangeRate(today);
+  }
+
+  exchangeRate.value = salePrice.value;
+}
+
+// Convert the Nominal Value from USD to PEN
+const convertUSDToPEN = (document) => {
+  
+  if (document.currency === 'USD' && exchangeRate.value > 0) {
+    return (document.nominalAmount * exchangeRate.value).toFixed(2);
+  }
+
+  return document.nominalAmount;
+}
+
+// Lifecycle Hooks
+onMounted(() => {
+  loadDocuments();
+  loadExchangeRate();
+});
 </script>
 
 <template>
@@ -87,17 +132,23 @@ onMounted(loadDocuments);
 
     <div class="flex flex-col p-4 lg:py-3 lg:px-30 gap-4 justify-between">
 
-      <div class="flex flex-col lg:flex-row lg:justify-between py-2 gap-3 ">
+      <div class="flex flex-col items-center lg:flex-row lg:justify-between py-2 gap-3 ">
       
-      <router-link :to="`/portfolios/${portfolioId}/documents/create`" class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center">
-        <span>Create</span>
-      </router-link>
+        <router-link :to="`/portfolios/${portfolioId}/documents/create`" class="w-full lg:w-[250px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center">
+          <span>Create</span>
+        </router-link>
 
-      <div class="flex flex-row gap-4">
-        <combo-box :options="options" placeholder="Filter by" class="lg:w-[300px]"/>
-        <search-input placeholder="Search " class="lg:max-w-[500px]"/>
+        <div class="flex items-center bg-white shadow-md rounded-3xl px-6 py-2 border border-gray-300 text-sm">
+          <span class="text-gray-700 font-semibold">FX Rate:</span>
+          <span class="ml-2 text-red-700 font-bold">{{ exchangeRate }}</span>
+        </div>
+
+        <div class="flex flex-row gap-4 w-full lg:w-1/2">
+          <combo-box :options="options" placeholder="Filter by" class=""/>
+          <search-input placeholder="Search " class=""/>
+        </div>
+
       </div>
-    </div>
     
     <div v-if="documents.length === 0" class="bg-[#afb6bd] max-h-[calc(100vh-10rem)] rounded-lg py-4 mt-3 px-6 overflow-y-auto min-h-[300px] flex items-center justify-center">
       <p class="text-center text-gray-700">This portfolio has no documents</p>
@@ -112,7 +163,7 @@ onMounted(loadDocuments);
           :issueDate="document.issueDate"
           :rateType="document.rateType"
           :rateValue="document.rateValue"
-          :nominalAmount="document.nominalAmount"
+          :nominalAmount="convertUSDToPEN(document)"
 
           :documentId="document.id"
           :portfolioId="document.portfolioId"
