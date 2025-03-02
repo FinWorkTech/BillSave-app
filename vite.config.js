@@ -17,5 +17,14 @@ export default defineConfig({
       '@webp': path.resolve(__dirname, './src/assets/images/webp'),
       '@shared': path.resolve(__dirname, './src/shared'),
     }
+  },
+  server: {
+    proxy: {
+      '/api/sunat': {
+        target: 'https://api.apis.net.pe/v2/sunat',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/sunat/, '')
+      }
+    }
   }
 })
