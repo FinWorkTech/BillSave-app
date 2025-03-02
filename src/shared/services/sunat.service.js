@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const http = axios.create({
-    baseURL: 'https://api.apis.net.pe/v2/sunat',
+    baseURL: '/api/sunat',
 
     headers: {
       Accept: 'application/json',
@@ -31,7 +31,7 @@ class SunatService {
       return response.data;
     }
     catch(err) {
-      console.error('Error fetching exchange rate: ', error);
+      console.error('Error fetching exchange rate: ', err);
       throw err;
     }
   }
