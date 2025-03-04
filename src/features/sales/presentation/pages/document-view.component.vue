@@ -1,8 +1,9 @@
 <script setup>
 
 // Importing Vue Composition API
-import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { ref, onMounted, computed } from 'vue';
 
 // Importing Shared Components
 import ComboBox from '@shared/components/combo-box.component.vue';
@@ -10,15 +11,11 @@ import SearchInput from '@shared/components/search.component.vue';
 
 import DocumentItem from '../components/document-item.component.vue';
 
-// Importing Use Cases
-import { fetchDocumentsUseCase } from '@features/sales/application/fetch-documents.usecase.js';
-import { deleteDocumentUseCase } from '@features/sales/application/delete-document.usecase.js';
-
-// Importing Sunat Store and StoreToRefs to access the store
 import { useSunatStore } from '@shared/presentation/store/sunat.store.js';
-import { storeToRefs } from 'pinia';
+import { SalesUseCases } from '@features/sales/application/sales.usecases.js';
 
 const route = useRoute();
+const salesUseCases = new SalesUseCases();
 
 defineOptions({
   name: 'document-view',
@@ -39,16 +36,14 @@ const portfolioId = computed(() => route.params.portfolioId);
 const sunatStore = useSunatStore();
 const { salePrice, date } = storeToRefs(sunatStore);
 
-// Methods
-
 // Load documents from the database
 const loadDocuments = async () => {
-  documents.value = await fetchDocumentsUseCase(portfolioId.value);
+  documents.value = await salesUseCases.fetchDocumentsByPortfolioId(portfolioId.value);
 };
 
 // Delete a document from the database
 const handleDeleteDocument = async ({ documentId, portfolioId}) => {
-  await deleteDocumentUseCase(documentId, portfolioId);
+  await salesUseCases.deleteDocument(documentId, portfolioId);
   loadDocuments();
 };
 

@@ -6,19 +6,27 @@ export class DocumentService extends IDocumentService {
 
   resourceEndpoint = '/documents';
 
-  async fetchDocuments(portfolioId) {
-    const response = await http.get(`${this.resourceEndpoint}?portfolioId=${portfolioId}`);
-    return DocumentMapper.toEntityList(response.data);
-  }
-
-  async fetchDocument(documentId) {
+  async fetchDocumentById(documentId) {
     const response = await http.get(`${this.resourceEndpoint}/${documentId}`);
     return DocumentMapper.toEntity(response.data);
+  }
+
+  async fetchDocumentsByPortfolioId(portfolioId) {
+    const response = await http.get(`${this.resourceEndpoint}?portfolioId=${portfolioId}`);
+    return DocumentMapper.toEntityList(response.data);
   }
 
   async fetchDocumentByDateRange(startDate, endDate) {
     const response = await http.get(`${this.resourceEndpoint}/daterange?startDate=${startDate}&endDate=${endDate}`);
 
+    return DocumentMapper.toEntityList(response.data);
+  }
+
+  async fetchDocumentsByPortfolioIdAndDateRange(portfolioId, startDate, endDate) {
+    const response = await http.get(`${this.resourceEndpoint}/portfolio/${portfolioId}/daterange`,
+      { params: { startDate, endDate } }
+    );
+  
     return DocumentMapper.toEntityList(response.data);
   }
 

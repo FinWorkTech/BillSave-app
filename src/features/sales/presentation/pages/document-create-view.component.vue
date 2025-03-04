@@ -2,13 +2,14 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import DocumentForm from '../components/document-form.component.vue';
+import { SalesUseCases } from '@features/sales/application/sales.usecases.js';
 import { useRouteParams } from '@shared/composable/use-route-params.composable.js';
 
-import { createDocumentUseCase } from '@features/sales/application/create-document.usecase.js';
-import { updateDocumentUseCase } from '@features/sales/application/update-document.usecase.js'; 
+import DocumentForm from '../components/document-form.component.vue';
+
 
 const router = useRouter();
+const salesUseCases = new SalesUseCases();
 
 defineOptions({
   name: 'document-create-view',
@@ -21,17 +22,32 @@ const documentId = parseInt(useRouteParams('documentId').value);
 
 // function to create a document
 async function createDocument(documentPayload) {
-  const response = await createDocumentUseCase(documentPayload);
-  console.log('Document created respose:', response);
-  alert('Document created successfully! 🎉');
-  router.push(`/portfolios/${documentPayload.portfolioId}/documents`);
+  const response = await salesUseCases.createDocument(documentPayload);
+
+  if (response.status == 201) 
+  {
+      console.log('Document created respose:', response);
+      alert('Document created successfully! 🎉');
+      router.push(`/portfolios/${documentPayload.portfolioId}/documents`);
+  }
+  else {
+    errorMessage.value = 'Failed to create document. Please try again.';
+  }
 }
 
 // function to update a document
 async function updateDocument(documentPayload) {
-  const response = await updateDocumentUseCase(documentPayload);
-  alert('Document updated successfully! 🎉');
-  router.push(`/portfolios/${documentPayload.portfolioId}/documents`);
+  const response = await salesUseCases.updateDocument(documentPayload);
+
+  if (response.status == 200) 
+  {
+      console.log('Document updated respose:', response);
+      alert('Document updated successfully! 🎉');
+      router.push(`/portfolios/${documentPayload.portfolioId}/documents`);
+  }
+  else {
+    errorMessage.value = 'Failed to update document. Please try again.';
+  }
 }
 
 // function to handle document creation or edition

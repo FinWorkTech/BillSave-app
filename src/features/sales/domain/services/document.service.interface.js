@@ -1,16 +1,20 @@
 
 export class IDocumentService {
 
-  async fetchDocuments(portfolioId) {
-    throw new Error("Method 'fetchDocuments' must be implemented");
+  async fetchDocumentById(documentId) {
+    throw new Error("Method 'fetchDocumentById' must be implemented");
   }
 
-  async fetchDocument(documentId) {
-    throw new Error("Method 'fetchDocument' must be implemented");
+  async fetchDocumentsByPortfolioId(portfolioId) {
+    throw new Error("Method 'fetchDocumentsByPortfolioId' must be implemented");
   }
 
   async fetchDocumentByDateRange(startDate, endDate) {
     throw new Error("Method 'fetchDocumentByDateRange' must be implemented");
+  }
+
+  async fetchDocumentsByPortfolioIdAndDateRange(portfolioId, startDate, endDate) {
+    throw new Error("Method 'fetchDocumentByPortfolioIdAndDateRange' must be implemented");
   }
 
   async createDocument(document) {

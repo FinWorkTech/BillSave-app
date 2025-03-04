@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
-import { fetchDocumentUseCase } from "@features/sales/application/fetch-document.usecase.js";
+import { SalesUseCases } from "../../application/sales.usecases";
+
+const salesUseCases = new SalesUseCases();
 
 export const useDocumentStore = defineStore("document", {
 
@@ -14,7 +16,7 @@ export const useDocumentStore = defineStore("document", {
         return this.documents[documentId];
       } 
 
-      const documentFound = await fetchDocumentUseCase(documentId);
+      const documentFound = await salesUseCases.fetchDocumentById(documentId);
       this.documents[documentId] = documentFound;
 
       return documentFound;
