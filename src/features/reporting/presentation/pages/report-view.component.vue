@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
+import * as XLSX from 'xlsx';
 
 import ComboBox from '@shared/components/combo-box.component.vue';
 import ReportItem from '@features/reporting/presentation/components/report-item.component.vue';
@@ -8,6 +9,8 @@ import ReportItem from '@features/reporting/presentation/components/report-item.
 import { fetchPortfoliosUseCase } from '@features/portfolio/application/fetch-portfolios.usecase.js';
 // TODO: refactor this implementation
 import { fetchDocumentByDateRangeUseCase } from '@features/sales/application/fetch-document-by-date-range.usecase.js';
+// TODO: refactor this implementation
+import { fetchPortfolioByNameUseCase } from '@features/portfolio/application/fetch-portfolio-by-name.usecase.js';
 
 defineOptions({
   name: 'report-view',
@@ -18,6 +21,8 @@ const userId = authData ? authData.userId : null;
 
 const userPortfolios = ref([]);
 const filteredDocuments = ref([]);
+
+const selectedPortfolio = ref('');
 
 const loading = ref(false);
 const errorMessage = ref('');
@@ -35,7 +40,8 @@ async function loadPortfolios() {
 
     userPortfolios.value = portfolios.map(portfolio => ({
       text: portfolio.name,
-      value: portfolio.name
+      value: portfolio.name,
+      tcea: portfolio.effectiveAnnualCostRate,
     }));
 
   } catch (error) {
@@ -63,6 +69,75 @@ async function filterDocumentsByDateRange() {
   }
 }
 
+// function to calculate discount
+function calculateDiscount(document, portfolioEffectiveAnnualCostRate) {
+
+  return document.nominalAmount * (portfolioEffectiveAnnualCostRate / 100);
+}
+
+async function generateReport() {
+
+  const portfolioName = selectedPortfolio.value;
+
+  if (!portfolioName) {
+    errorMessage.value = 'Please select a portfolio to generate the report';
+    return;
+  }
+
+  try {
+    const portfolio = await fetchPortfolioByNameUseCase(portfolioName);
+
+    if (!portfolio) {
+      errorMessage.value = 'Portfolio not found';
+      return;
+    }
+
+    console.log("portfolio", portfolio);
+
+    let totalDiscount = 0;
+    const portfolioEffectiveAnnualCostRate = portfolio.effectiveAnnualCostRate;
+
+    // here we calculate the discount for each document
+    const reportData = filteredDocuments.value.map(document => {
+
+      const discount = calculateDiscount(document, portfolioEffectiveAnnualCostRate);
+
+      totalDiscount += discount;
+      
+      return {
+        'Code': document.code,
+        'Issue Date': document.issueDate,
+        'Due Date': document.dueDate,
+        'Nominal Amount': document.nominalAmount,
+        'Discount': discount,
+        'Rate Value': document.rateValue,
+      };
+    });
+
+    //
+    const summary = [
+      { 'Report': 'summary' },
+      { 'Monto de Descuento Total': totalDiscount },
+      { 'TCEA del Portafolio': portfolioEffectiveAnnualCostRate },
+      {} // Línea en blanco para separar del detalle
+    ];
+
+    // Here we concatenate the summary with the report data
+    const worksheetData = summary.concat(reportData);
+
+    // Here we create the worksheet
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData, { skipHeader: false });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
+
+    // Here we save the file
+    XLSX.writeFile(workbook, 'reporte.xlsx');
+  }
+  catch (err) {
+    errorMessage.value = 'Failed to fetch portfolio details';
+  }
+}
+
 // Load user portfolios on component mount
 onMounted(() => {
   loadPortfolios();
@@ -80,14 +155,21 @@ watch([startDate, endDate], () => {
   <div class="px-4 py-8 flex flex-col gap-4 lg:mt-10">
 
     <div class="flex flex-col lg:flex-row lg:justify-between lg:px-4 gap-4">
-      
-      <router-link to="/portfolios/create" class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center leading-8">
+
+      <!--button to generate report-->
+      <button 
+        @click="generateReport" 
+        class="w-full lg:w-[300px] bg-[#66798a] block px-4 py-2 rounded-4xl text-white text-center leading-8">
         <span>Generate</span>
-      </router-link>
+      </button>
 
       <div class="flex flex-col gap-4 lg:flex-row items-center lg:w-1/2">
 
-        <combo-box placeholder="Select portfolio" :options="userPortfolios"/>
+        <!--combo-box with v-model to get the selected portfolio-->
+        <combo-box 
+          v-model="selectedPortfolio"
+          placeholder="Select portfolio" 
+          :options="userPortfolios"/>
 
         <div class="flex flex-row justify-between w-full">
           <div class="bg-[#d6d7d8] rounded-2xl shadow-lg w-[48%]">
