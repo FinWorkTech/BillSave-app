@@ -5,6 +5,10 @@ export class IPortfolioService {
     throw new Error("Method 'fetchPortfolios' must be implemented.");
   }
 
+  fetchPortfolioByName(name) {
+    throw new Error("Method 'fetchPortfoliosByName' must be implemented.");
+  }
+
   createPortfolio(portfolio) {
     throw new Error("Method 'createPortfolio' must be implemented.");
   }

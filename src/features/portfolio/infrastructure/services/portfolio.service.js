@@ -12,6 +12,12 @@ export class PortfolioService extends IPortfolioService {
     return PortfolioMapper.toEntityList(response.data);
   }
 
+  async fetchPortfolioByName(name) {
+    const response = await http.get(`${this.resourceEndpoint}/${name}`);
+    
+    return PortfolioMapper.toEntity(response.data);
+  }
+
   async createPortfolio(portfolio) {
     const response = await http.post(this.resourceEndpoint, PortfolioMapper.toRaw(portfolio));
     
