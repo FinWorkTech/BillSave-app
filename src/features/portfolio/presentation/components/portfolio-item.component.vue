@@ -1,8 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { deletePortfolioUseCase} from '@features/portfolio/application/delete-portfolio.usecase.js';
+import { PortfolioUseCases } from '@features/portfolio/application/portfolio.usecases.js';
 
 const router = useRouter();
+const portfolioUseCases = new PortfolioUseCases();
 
 defineOptions({
   name: 'portfolio-item',
@@ -36,7 +37,7 @@ const props = defineProps({
 });
 
 const deletePortfolio = async () => {
-  await deletePortfolioUseCase(props.portfolioId);
+  await portfolioUseCases.deletePortfolio(props.portfolioId);
   props.refreshPortfolios();
 };
 

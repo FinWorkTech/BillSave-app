@@ -1,8 +1,8 @@
 
 export class IPortfolioService {
 
-  fetchPortfolios(userId) {
-    throw new Error("Method 'fetchPortfolios' must be implemented.");
+  fetchPortfoliosByUserId(userId) {
+    throw new Error("Method 'fetchPortfoliosByUserId' must be implemented.");
   }
 
   fetchPortfolioByName(name) {

@@ -5,8 +5,9 @@ import { AuthService } from '@shared/services/auth.service.js';
 import SearchInput from '@shared/components/search.component.vue'
 
 import PortfolioItem from '../components/portfolio-item.component.vue';
-import { fetchPortfoliosUseCase } from '@features/portfolio/application/fetch-portfolios.usecase.js';
+import { PortfolioUseCases } from '@features/portfolio/application/portfolio.usecases.js';
 
+const portfolioUseCases = new PortfolioUseCases();
 
 defineOptions({
   name: 'portfolio-view',
@@ -18,7 +19,7 @@ const portfolios = ref([]);
 const searchQuery = ref('');
 
 const loadPortfolios = async () => {
-  portfolios.value = await fetchPortfoliosUseCase(userId);
+  portfolios.value = await portfolioUseCases.fetchPortfoliosByUserId(userId);
 };
 
 onMounted(loadPortfolios);

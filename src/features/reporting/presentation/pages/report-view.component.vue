@@ -5,12 +5,12 @@ import * as XLSX from 'xlsx';
 import ComboBox from '@shared/components/combo-box.component.vue';
 import ReportItem from '@features/reporting/presentation/components/report-item.component.vue';
 
-// TODO: refactor this implementation
-import { fetchPortfoliosUseCase } from '@features/portfolio/application/fetch-portfolios.usecase.js';
+import { PortfolioUseCases } from '@features/portfolio/application/portfolio.usecases.js';
+
+const portfolioUseCases = new PortfolioUseCases();
+
 // TODO: refactor this implementation
 import { fetchDocumentByDateRangeUseCase } from '@features/sales/application/fetch-document-by-date-range.usecase.js';
-// TODO: refactor this implementation
-import { fetchPortfolioByNameUseCase } from '@features/portfolio/application/fetch-portfolio-by-name.usecase.js';
 
 defineOptions({
   name: 'report-view',
@@ -36,7 +36,7 @@ async function loadPortfolios() {
   loading.value = true;
 
   try {
-    const portfolios = await fetchPortfoliosUseCase(userId);
+    const portfolios = await portfolioUseCases.fetchPortfoliosByUserId(userId);
 
     userPortfolios.value = portfolios.map(portfolio => ({
       text: portfolio.name,
@@ -85,7 +85,7 @@ async function generateReport() {
   }
 
   try {
-    const portfolio = await fetchPortfolioByNameUseCase(portfolioName);
+    const portfolio = await portfolioUseCases.fetchPortfolioByNameUseCase(portfolioName);
 
     if (!portfolio) {
       errorMessage.value = 'Portfolio not found';

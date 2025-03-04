@@ -5,8 +5,7 @@ import { useRouter } from 'vue-router';
 import PortfolioForm from '../components/portfolio-form.component.vue';
 import { useRouteParams } from '@shared/composable/use-route-params.composable.js'; 
 
-import { createPortfolioUseCase } from '@features/portfolio/application/create-portfolio.usecase.js';
-import { updatePortfolioUseCase } from '@features/portfolio/application/update-portfolio.usecase.js';
+import { PortfolioUseCases } from '@features/portfolio/application/portfolio.usecases.js';
 
 const router = useRouter();
 const loading = ref(false); 
@@ -14,16 +13,29 @@ const errorMessage = ref('');
 
 const portfolioId = parseInt(useRouteParams('portfolioId').value);
 
+const portfolioUseCases = new PortfolioUseCases();
+
 async function createPortfolio(portfolioPayload) {
-  await createPortfolioUseCase(portfolioPayload);
+  await portfolioUseCases.createPortfolio(portfolioPayload);
   alert('Portfolio created successfully! 🎉');
   router.push('/portfolios');
 }
 
 async function updatePortfolio(portfolioPayload) {
-  await updatePortfolioUseCase(portfolioPayload);
-  alert('Portfolio updated successfully! 🎉');
-  router.push('/portfolios');
+  const response = await portfolioUseCases.updatePortfolio(portfolioPayload);
+
+  console.log('response', response);
+
+  if (response.status == 200) {
+    alert('Portfolio updated successfully! 🎉');
+    router.push('/portfolios');
+  }
+  else if (response.status == 400) {
+    alert('Invalid data. Please check the form and try again.');
+  }
+  else {
+    errorMessage.value = 'Failed to update portfolio. Please try again.';
+  }
 }
 
 async function handleCreateOrEditPortfolio(portfolioData) {
@@ -39,7 +51,7 @@ async function handleCreateOrEditPortfolio(portfolioData) {
       await createPortfolio(portfolioData);
     }
   } catch (error) {
-    console.error('Error creating or updating portfolio:', error);
+  
     if (portfolioId) {
       errorMessage.value = 'Failed to update portfolio. Please try again.';
     } else {

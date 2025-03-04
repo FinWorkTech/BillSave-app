@@ -6,7 +6,7 @@ export class PortfolioService extends IPortfolioService {
 
   resourceEndpoint = '/portfolios';
 
-  async fetchPortfolios(userId) {
+  async fetchPortfoliosByUserId(userId) {
     const response = await http.get(`${this.resourceEndpoint}?userId=${userId}`);
     
     return PortfolioMapper.toEntityList(response.data);
