@@ -159,7 +159,7 @@ onMounted(loadDocumentDataIntoTheForm);
       <div class="flex justify-between mt-3">
         <router-link :to="`/portfolios/${portfolioId}/documents`"
           class="px-4 py-2 rounded-4xl bg-[#353e49] text-white hover:bg-[#2c333a] shadow-lg">
-          <button type="button" @click="handleCancel" class="cursor-pointer">
+          <button type="button" @click.prevent="handleCancel" class="cursor-pointer">
             Cancel
           </button>
         </router-link>

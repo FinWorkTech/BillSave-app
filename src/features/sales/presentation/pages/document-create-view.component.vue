@@ -82,7 +82,7 @@ async function handleCreateOrEditDocument(documentData) {
 
 <template>
   <div class="flex items-center justify-center h-[93vh] bg-gray-100 p-4">
-    <document-form @submit="handleCreateOrEditDocument"/>
+    <document-form @submit.prevent="handleCreateOrEditDocument"/>
     <p v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</p>
   </div>
 </template>

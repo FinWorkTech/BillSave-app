@@ -66,7 +66,7 @@ async function handleCreateOrEditPortfolio(portfolioData) {
 
 <template>
   <div class="flex items-center justify-center h-[93vh] bg-gray-100 p-4">
-    <portfolio-form @submit="handleCreateOrEditPortfolio"/>
+    <portfolio-form @submit.prevent="handleCreateOrEditPortfolio"/>
     <p v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</p>
   </div>
 </template>

@@ -79,7 +79,7 @@ const deletePortfolio = async () => {
         </button>
       </router-link>
 
-      <button @click="deletePortfolio" class="delete-button rounded-4xl p-3 hover:cursor-pointer">
+      <button @click.prevent="deletePortfolio" class="delete-button rounded-4xl p-3 hover:cursor-pointer">
         <img src="@svg/trash.svg" alt="Trash Logo" class="size-7 "/>
       </button>
     </div>
